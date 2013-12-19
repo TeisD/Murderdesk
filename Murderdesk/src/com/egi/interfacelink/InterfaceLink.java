@@ -66,14 +66,19 @@ public class InterfaceLink extends Thread{
 				comment("[InterfaceLink] New client accepted.");
 				reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				while(true & running){
-					String s = reader.readLine();
-					if(s != null){
-						store(s);
-		                comment("[InterfaceLink] "+ s);
-					}else {
-		                comment("[InterfaceLink] Client disconected. Waiting for new connection...");
-						run();
-					}
+					try{
+						Thread.sleep(50);
+						String s = reader.readLine();
+						if(s != null){
+							store(s);
+			                comment("[InterfaceLink] "+ s);
+						}else {
+			                comment("[InterfaceLink] Client disconected. Waiting for new connection...");
+							run();
+						}
+					} catch (Exception e){
+				        e.printStackTrace();
+				    }
 	            }   //end for
 			} catch (IOException e) {
 				e.printStackTrace();
