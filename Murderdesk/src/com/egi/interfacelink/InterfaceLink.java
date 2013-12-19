@@ -1,3 +1,12 @@
+/**
+ * The InterfaceLink connects the digital prototype of our desk and the java code
+ * 
+ * [0] light on/off
+ * [1] light value
+ * 
+ */
+
+
 package com.egi.interfacelink;
 
 import java.io.BufferedReader;
@@ -16,10 +25,19 @@ public class InterfaceLink extends Thread{
 	private ServerSocket server;
 	private Socket client;
 	private BufferedReader reader;
+	/**
+	 * Show or hide the comments of the InterfaceLink class in the console
+	 */
 	public Boolean comments = false;
 	private Boolean connected = false;
 	private InterfaceLinkStorage[] values;
 	
+	/**
+	 * Constructor of the InterfaceLink object
+	 *
+	 * @param	address		IP where the serversocket will listen
+	 * @param	name		Port where the serverscocket will listen
+	 */
 	public InterfaceLink(String address, int port){
 		// Setup the storage object
 		values = new InterfaceLinkStorage[SIZE];
@@ -37,6 +55,9 @@ public class InterfaceLink extends Thread{
 		}
 	}
 	
+	/**
+	 * Starts the InterfaceLink.
+	 */
 	@Override
 	public void run() {
 		if(running){
@@ -60,6 +81,9 @@ public class InterfaceLink extends Thread{
 		}
 	}
 	
+	/**
+	 * Gracefully terminates all open connections
+	 */
 	public void kill(){
 		try {
 			running = false;
@@ -72,18 +96,36 @@ public class InterfaceLink extends Thread{
 		}
 	}
 	
+	/**
+	 * Returns the value of the physical input-device on the desk as an on/off boolean
+	 * 
+	 * @param	id	the id of the input device (see above)
+	 */
 	public boolean getBoolean(int id){
 		return values[id].getAsBoolean();
 	}
-	
+
+	/**
+	 * Returns the value of the physical input-device on the desk as an integer
+	 * 
+	 * @param	id	the id of the input device (see above)
+	 */
 	public int getInt(int id){
 		return values[id].getAsInteger();
 	}
 	
+	/**
+	 * Returns the value of the physical input-device on the desk as a double
+	 * 
+	 * @param	id	the id of the input device (see above)
+	 */
 	public double getDouble(int id){
 		return values[id].getAsDouble();
 	}
 	
+	/**
+	 * Returns true if an interface is connected, false if not
+	 */
 	public boolean isConnected(){
 		return connected;
 	}
